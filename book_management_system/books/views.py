@@ -17,3 +17,19 @@ def add_book(request):
         print('get the form') 
         form = BookForm()
         return render(request,'add_book.html', {'form':form})
+    
+def delete_book(request,book_id):
+    book = Book.objects.get(id=book_id)
+    book.delete()
+    return redirect('homepage')
+
+def edit_book(request,book_id):
+    book = Book.objects.get(id=book_id)
+    if request.method == 'POST':
+        form = BookForm(request.POST,instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('homepage')
+    else:
+        form = BookForm(instance=book)
+        return render(request,'add_book.html',{'form':form})
