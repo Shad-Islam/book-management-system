@@ -33,3 +33,8 @@ def edit_book(request,book_id):
     else:
         form = BookForm(instance=book)
         return render(request,'add_book.html',{'form':form})
+    
+    
+def view_book(request,book_id):
+    book = Book.objects.get(id=book_id)
+    return render(request,'view_book.html',{'book':book})
